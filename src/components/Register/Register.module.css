@@ -1,0 +1,47 @@
+.contain {
+	display: flex;
+	height: 100vh;
+	justify-content: center;
+	align-items: center;
+	background-image: url('../../img/books.jpg');
+}
+
+.form_container {
+	display: flex;
+	flex-direction: column;
+	border: solid 0.2rem var(--deepPurple);
+	border-radius: 10%;
+	align-items: center;
+	justify-content: center;
+	width: 20rem;
+	height: 20rem;
+	background-color: var(--royalPurple);
+	gap: 1rem;
+}
+
+.input {
+	width: calc(100% - 6rem);
+	background-color: var(--yellow);
+}
+
+input:focus {
+	outline: none !important;
+	border-color: var(--pink);
+	box-shadow: 0 0 10px var(--pink);
+}
+
+.label {
+	color: var(--honeydew);
+}
+
+.btn_submit {
+	margin-top: 2%;
+	color: var(--honeydew);
+	background-color: var(--darkPurple);
+	width: calc(100% - 12rem);
+}
+
+.a_register{
+    color: var(--pink);
+    text-decoration: none;
+}
