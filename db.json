@@ -1,0 +1,14 @@
+{
+    "giver":[
+        {
+            "id": 1,
+            "name": "Jan",
+            "surname": "Kowalski",
+            "city": "Warszawa",
+            "street": "Wojska polskiego",
+            "home_no": 1,
+            "post-code": "55-003",
+            "e-mail": "jan.kowalski@gmail.com" 
+        }
+    ]
+}

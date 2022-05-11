@@ -1,38 +1,75 @@
-.App {
+:root {
+	--yellow: #F8C630;
+	--pink: #E54F6D;
+	--darkPurple: #451F55;
+  --deepPurple: #451F55;
+  --royalPurple: #724E91;
+  --honeydew:#EFF8E2;
+}
+
+.non-link{
+  text-decoration: none;
+}
+
+.nav{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  background-image: url("./img/book_landing.jpg");
+  height: 110vh;
+  font-size: 2.5rem;
+  font-family: 'Dancing Script';
+  padding-left: 1%;
+  padding-top: 1%;
+  padding-right: 2%;
+  
+}
+
+.logo{
+  font-size: 4.5rem;
+  align-content: flex-start;
+  height: 5rem;
+  width: 20rem;
+  font-family: "Water brush";
+}
+
+
+.small{
+  background-image: url("./img/books.jpg");
+  height: 45vh;
+}
+
+.pink{
+  color: var(--pink);
+}
+
+.links{
+  display: flex;
+  justify-content: space-between;
+  width: 55rem;
+  height: 5rem;
+}
+
+.intro{
+  width: 120rem;
+  height: 45rem;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.deep-purple{
+  color: var(--deepPurple);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.honey_dew{
+  color: var(--honeydew);
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.btn{
+  border-radius: 0.5rem;
+  height: 3rem;
+  width: 10rem;
+  font-size: 1rem;
+  background-color: var(--royalPurple);
+  color: var(--honeydew);
+  border: 0.15rem solid var(--deepPurple);
 }
