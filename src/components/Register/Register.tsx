@@ -18,7 +18,7 @@ export function Register() {
 		password = initialValues.password
 	) => {
 		try {
-			const user = await createUserWithEmailAndPassword(auth, email, password);
+			await createUserWithEmailAndPassword(auth, email, password);
 			return navigate('/home');
 			return;
 		} catch (err) {

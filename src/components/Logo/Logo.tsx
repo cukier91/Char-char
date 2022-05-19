@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { navElements } from '../../ConstNav';
 import { auth } from '../../firebase-config';
-import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
-import { useNavigate } from 'react-router-dom';
+import {onAuthStateChanged, signOut } from 'firebase/auth';
+
 
 
 // import { useNavigate } from "react-router-dom";
@@ -14,7 +14,6 @@ interface LogoProps {
 }
 
 export const Logo = ({ classes = 'nav', landing = true }: LogoProps) => {
-	const navigate = useNavigate()
 	/* eslint no-console: ["error", { allow: ["warn", "error", "log"] }] */
 	const [userState, setUserState] = useState<string | null>('');
 	onAuthStateChanged(auth, (user) => {
