@@ -4,3 +4,11 @@
   align-items: center;
   height: 100vh;
 }
+
+.map{
+  height: 100px;
+  width: 100px;
+  border: solid 1px red;
+  z-index: 9999;
+}
+

@@ -3,6 +3,8 @@ import { auth } from '../../firebase-config';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import { Formik, Form, Field } from 'formik';
+import 'leaflet/dist/leaflet.css';
+import { useMutation } from 'react-query';
 
 interface Values {
 	email: string;
@@ -13,18 +15,26 @@ export function Login() {
 	const initialValues: Values = { email: '', password: '' };
 	const navigate = useNavigate();
 
+	
 	const loginator = async (
 		email = initialValues.email,
 		password = initialValues.password
-	) => {
-		try {
-			const user = await signInWithEmailAndPassword(auth, email, password);
-			return navigate('/home');
-			return;
-		} catch (err) {
-			alert(err);
-		}
-	};
+		) => {
+			try {
+				await signInWithEmailAndPassword(auth, email, password);
+				return navigate('/home');
+			} catch (err) {
+				alert(err);
+			}
+		};
+		const mutation = useMutation(loginator,{
+			onSuccess: ()=>{
+				navigate('/home')
+			},
+			onError: ()=>{
+				alert("error")
+			}
+		})
 
 	return (
 		<>
