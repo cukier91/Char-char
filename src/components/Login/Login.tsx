@@ -3,7 +3,6 @@ import { auth } from '../../firebase-config';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import { Formik, Form, Field } from 'formik';
-import 'leaflet/dist/leaflet.css';
 import { useMutation } from 'react-query';
 
 interface Values {

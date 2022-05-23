@@ -12,5 +12,9 @@
 			name: 'Contact',
 			url: '/contact',
 		},
+		{
+			name: 'Add Book',
+			url: '/addBook',
+		},
 	
 	];
