@@ -4,6 +4,7 @@ import { Landing } from './components/Landing/Landing';
 import { Logo } from './components/Logo/Logo';
 import { Login } from './components/Login/Login';
 import { Register } from './components/Register/Register';
+import {AddBook} from './components/AddBook/AddBook'
 import { BrowserRouter as Routers, Routes, Route } from 'react-router-dom';
 import { useQueryClientConfig } from './config/react-query-client';
 import { ReactQueryDevtools } from "react-query/devtools";
@@ -26,6 +27,7 @@ function App() {
 						<Route path="login" element={<Login />} />
 						<Route path="register" element={<Register />} />
 						<Route path="contact" element={<Contact />} />
+						<Route path="addBook" element={<AddBook />} />
 					</Routes>
 				</Routers>
 			</Suspense>
