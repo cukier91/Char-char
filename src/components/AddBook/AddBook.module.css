@@ -20,13 +20,13 @@
 	display: flex;
 	flex-direction: column;
 	border: solid 0.2rem var(--deepPurple);
-	border-radius: 10%;
+	border-radius: 5%;
 	align-items: center;
 	justify-content: center;
-	width: 20rem;
-	height: 20rem;
+	width: 30rem;
+	height: 35rem;
 	background-color: var(--royalPurple);
-	gap: 1rem;
+	gap: 0.7rem;
 }
 
 .input {

@@ -30,9 +30,6 @@ export function Landing() {
 		return queryDoc.docs;
 	}
 
-	// useEffect(() => {
-	// 	getData();
-	// });
 
 	return (
 		<>
