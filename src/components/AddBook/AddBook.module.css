@@ -13,7 +13,7 @@
     background-image: url("../../img/shelf.jpg");
 	display: flex;
     flex-direction: column;
-	height: 110vh;
+	height: 120vh;
 	justify-content: center;
 	align-items: center;
     gap:1rem; 
@@ -34,7 +34,7 @@
 	align-items: center;
 	justify-content: center;
 	width: 30rem;
-	height: 38rem;
+	height: 42rem;
 	background-color: var(--royalPurple);
 	gap: 0.7rem;
 }

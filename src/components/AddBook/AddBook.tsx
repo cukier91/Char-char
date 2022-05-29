@@ -5,10 +5,14 @@ import { db } from '../../firebase-config';
 import { collection, addDoc } from 'firebase/firestore';
 import { Formik, Form, Field } from 'formik';
 import { useNavigate } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
+import { string } from 'yup';
 
 interface Values {
 	city: string;
 	postCode: string;
+	street: string;
+	building_no: string;
 	book_author: string;
 	book_name: string;
 	contact: string;
@@ -16,7 +20,7 @@ interface Values {
 	user: string;
 	location: [number, number];
 	status: string;
-	
+	id: string;
 }
 
 export function AddBook() {
@@ -32,31 +36,39 @@ export function AddBook() {
 	const initialValues: Values = {
 		city: '',
 		postCode: '',
-		user: 'some',
+		street: '',
+		building_no: '',
+		user: '',
 		types: '',
 		book_author: '',
 		book_name: '',
 		contact: '',
 		location: [location[0], location[1]],
 		status: 'available',
+
+		id: uuidv4(),
 	};
 
 	const addBook = async (
 		city = initialValues.city,
 		postCode = initialValues.postCode,
+		street = initialValues.street,
+		building_no = initialValues.building_no,
 		bookAuthor = initialValues.book_author,
 		bookName = initialValues.book_name,
 		contact = initialValues.contact,
-		types = initialValues.types,	
+		types = initialValues.types,
 		user = initialValues.user,
 		status = initialValues.status,
 		location = initialValues.location,
-		
+		id = initialValues.id
 	) => {
 		try {
 			await addDoc(collection(db, 'book_point'), {
 				city: city,
 				postCode: postCode,
+				street: street,
+				building_no: building_no,
 				bookAuthor: bookAuthor,
 				bookName: bookName,
 				contact: contact,
@@ -64,6 +76,7 @@ export function AddBook() {
 				types: types,
 				location: location,
 				status: status,
+				id: id,
 			});
 		} catch (err) {
 			alert(err);
@@ -80,10 +93,13 @@ export function AddBook() {
 						addBook(
 							values.city,
 							values.postCode,
+							values.street,
+							values.building_no,
 							values.book_author,
 							values.book_name,
 							values.contact,
-							values.types
+							values.types,
+							values.user,	
 						);
 					}}
 				>
@@ -104,11 +120,21 @@ export function AddBook() {
 						<label className={style.label} htmlFor="street">
 							Street:
 						</label>
-						<Field className={style.input} id="street" type="text" name="street" />
+						<Field
+							className={style.input}
+							id="street"
+							type="text"
+							name="street"
+						/>
 						<label className={style.label} htmlFor="building_no">
 							Building no:
 						</label>
-						<Field className={style.input} id="building_no" type="text" name="building_no" />
+						<Field
+							className={style.input}
+							id="building_no"
+							type="text"
+							name="building_no"
+						/>
 						<label className={style.label} htmlFor="book_author">
 							Book author:
 						</label>
@@ -136,6 +162,10 @@ export function AddBook() {
 							type="text"
 							name="contact"
 						/>
+						<label className={style.label} htmlFor="user">
+							Your name:
+						</label>
+						<Field className={style.input} id="user" type="text" name="user" />
 
 						<div role="group" aria-labelledby="my-radio-group">
 							<label>
@@ -159,12 +189,7 @@ export function AddBook() {
 						<button type="submit" className={style.btn_submit}>
 							Submit
 						</button>
-						<p className={style.label}>
-							Nie masz jeszcze konta?
-							<a className={style.a_register} href="/register">
-								Zarejestruj się
-							</a>
-						</p>
+						<p className={style.label}>tu będzie obsługa walidacji</p>
 					</Form>
 				</Formik>
 			</div>
