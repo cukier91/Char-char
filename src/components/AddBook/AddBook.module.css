@@ -10,10 +10,20 @@
 
 
 .contain {
+    background-image: url("../../img/shelf.jpg");
 	display: flex;
-	height: 100vh;
+    flex-direction: column;
+	height: 110vh;
 	justify-content: center;
 	align-items: center;
+    gap:1rem; 
+}
+
+.contain>h1{
+    font-family: "Water brush";
+    font-size: 3rem;
+    color: var(--yellow);
+    
 }
 
 .form_container {
@@ -24,7 +34,7 @@
 	align-items: center;
 	justify-content: center;
 	width: 30rem;
-	height: 35rem;
+	height: 38rem;
 	background-color: var(--royalPurple);
 	gap: 0.7rem;
 }

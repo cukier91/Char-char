@@ -4,6 +4,7 @@ import { Logo } from '../Logo/Logo';
 import { db } from '../../firebase-config';
 import { collection, addDoc } from 'firebase/firestore';
 import { Formik, Form, Field } from 'formik';
+import { useNavigate } from 'react-router-dom';
 
 interface Values {
 	city: string;
@@ -19,6 +20,7 @@ interface Values {
 }
 
 export function AddBook() {
+	const navigate = useNavigate();
 	const [location, setLocation] = useState<Array<number>>([]);
 
 	useEffect(() => {
@@ -70,8 +72,8 @@ export function AddBook() {
 
 	return (
 		<>
-			<Logo classes="nav small" landing={false} />
 			<div className={style.contain}>
+				<h1>Add Book Form</h1>
 				<Formik
 					initialValues={initialValues}
 					onSubmit={(values) => {
@@ -99,6 +101,14 @@ export function AddBook() {
 							type="text"
 							name="postCode"
 						/>
+						<label className={style.label} htmlFor="street">
+							Street:
+						</label>
+						<Field className={style.input} id="street" type="text" name="street" />
+						<label className={style.label} htmlFor="building_no">
+							Building no:
+						</label>
+						<Field className={style.input} id="building_no" type="text" name="building_no" />
 						<label className={style.label} htmlFor="book_author">
 							Book author:
 						</label>
