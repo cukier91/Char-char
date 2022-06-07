@@ -6,9 +6,9 @@
 }
 
 .map{
-  height: 100px;
-  width: 100px;
+  height: 400px;
+  width: 400px;
   border: solid 1px red;
-  z-index: 9999;
+
 }
 

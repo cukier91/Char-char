@@ -3,23 +3,30 @@ import style from './AddBook.module.css';
 import { Logo } from '../Logo/Logo';
 import { db } from '../../firebase-config';
 import { collection, addDoc } from 'firebase/firestore';
-import { Formik, Form, Field } from 'formik';
+import { FormikProvider, Form, Field,useFormik } from 'formik';
+import { useNavigate } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
 
 interface Values {
 	city: string;
 	postCode: string;
-	book_author: string;
-	book_name: string;
+	street: string;
+	buildingNo: string;
+	bookAuthor: string;
+	bookName: string;
 	contact: string;
 	types: string;
 	user: string;
-	location: [number, number];
 	status: string;
-	
+}
+
+interface AddBookData extends Values {
+	location:[number,number];
 }
 
 export function AddBook() {
-	const [location, setLocation] = useState<Array<number>>([]);
+	const navigate = useNavigate();
+	const [location, setLocation] = useState<[number,number]>([0,0]);
 
 	useEffect(() => {
 		navigator.geolocation.getCurrentPosition(function (position) {
@@ -30,31 +37,32 @@ export function AddBook() {
 	const initialValues: Values = {
 		city: '',
 		postCode: '',
-		user: 'some',
+		street: '',
+		buildingNo: '',
+		user: '',
 		types: '',
-		book_author: '',
-		book_name: '',
+		bookAuthor: '',
+		bookName: '',
 		contact: '',
-		location: [location[0], location[1]],
-		status: 'available',
+		status: 'available'
 	};
 
-	const addBook = async (
-		city = initialValues.city,
-		postCode = initialValues.postCode,
-		bookAuthor = initialValues.book_author,
-		bookName = initialValues.book_name,
-		contact = initialValues.contact,
-		types = initialValues.types,	
-		user = initialValues.user,
-		status = initialValues.status,
-		location = initialValues.location,
-		
-	) => {
+	const formik=useFormik({
+		initialValues: initialValues,
+		//validationSchema: {},
+		onSubmit: (values) => {
+						addBook({...values,location});
+					},
+	})
+
+	const addBook = async (values:AddBookData) => {
 		try {
+			const {city,postCode,street,buildingNo,bookAuthor,bookName,contact,user,types,status,location}=values;
 			await addDoc(collection(db, 'book_point'), {
 				city: city,
 				postCode: postCode,
+				street: street,
+				building_no: buildingNo,
 				bookAuthor: bookAuthor,
 				bookName: bookName,
 				contact: contact,
@@ -62,29 +70,26 @@ export function AddBook() {
 				types: types,
 				location: location,
 				status: status,
+				id: uuidv4(),
 			});
 		} catch (err) {
 			alert(err);
 		}
 	};
 
+	const FormInput=(label:string,name:string,type="text")=>{
+		//to upper case label first
+		return <><label className={style.label} htmlFor={label}>
+							{label}: 
+						</label>
+						<Field className={style.input} id={label} type={type} name={name} /></>
+	}
+
 	return (
 		<>
-			<Logo classes="nav small" landing={false} />
 			<div className={style.contain}>
-				<Formik
-					initialValues={initialValues}
-					onSubmit={(values) => {
-						addBook(
-							values.city,
-							values.postCode,
-							values.book_author,
-							values.book_name,
-							values.contact,
-							values.types
-						);
-					}}
-				>
+				<h1>Add Book Form</h1>
+				<FormikProvider value={formik}>
 					<Form className={style.form_container}>
 						<label className={style.label} htmlFor="city">
 							City:
@@ -99,33 +104,55 @@ export function AddBook() {
 							type="text"
 							name="postCode"
 						/>
-						<label className={style.label} htmlFor="book_author">
+						<label className={style.label} htmlFor="street">
+							Street:
+						</label>
+						<Field
+							className={style.input}
+							id="street"
+							type="text"
+							name="street"
+						/>
+						<label className={style.label} htmlFor="buildingNo">
+							Building no:
+						</label>
+						<Field
+							className={style.input}
+							id="buildingNo"
+							type="text"
+							name="buildingNo"
+						/>
+						<label className={style.label} htmlFor="bookAuthor">
 							Book author:
 						</label>
 						<Field
 							className={style.input}
-							id="book_author"
+							id="bookAuthor"
 							type="text"
-							name="book_author"
+							name="bookAuthor"
 						/>
-						<label className={style.label} htmlFor="book_name">
+						<label className={style.label} htmlFor="bookName">
 							Book name:
 						</label>
 						<Field
 							className={style.input}
-							id="book_name"
+							id="bookName"
 							type="text"
-							name="book_name"
+							name="bookName"
 						/>
 						<label className={style.label} htmlFor="contact">
 							Contact number:
 						</label>
 						<Field
 							className={style.input}
-							id="contanct"
+							id="contact"
 							type="text"
 							name="contact"
 						/>
+						<label className={style.label} htmlFor="user">
+							Your name:
+						</label>
+						<Field className={style.input} id="user" type="text" name="user" />
 
 						<div role="group" aria-labelledby="my-radio-group">
 							<label>
@@ -149,14 +176,9 @@ export function AddBook() {
 						<button type="submit" className={style.btn_submit}>
 							Submit
 						</button>
-						<p className={style.label}>
-							Nie masz jeszcze konta?
-							<a className={style.a_register} href="/register">
-								Zarejestruj się
-							</a>
-						</p>
+						<p className={style.label}>tu będzie obsługa walidacji</p>
 					</Form>
-				</Formik>
+				</FormikProvider>
 			</div>
 		</>
 	);
