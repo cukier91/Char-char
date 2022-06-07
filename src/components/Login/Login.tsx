@@ -3,7 +3,7 @@ import { auth } from '../../firebase-config';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import { Formik, Form, Field } from 'formik';
-import { useMutation } from 'react-query';
+import { useMutation,useQueryClient } from 'react-query';
 
 interface Values {
 	email: string;
@@ -13,6 +13,7 @@ interface Values {
 export function Login() {
 	const initialValues: Values = { email: '', password: '' };
 	const navigate = useNavigate();
+	//const queryClient=useQueryClient()
 
 	
 	const loginator = async (
@@ -26,8 +27,10 @@ export function Login() {
 				alert(err);
 			}
 		};
-		const mutation = useMutation(loginator,{
+		
+		const mutation = useMutation(({email,password}:{email:string,password:string})=>loginator(email,password),{
 			onSuccess: ()=>{
+				//queryClient.invalidateQueries(['getBooks'])
 				navigate('/home')
 			},
 			onError: ()=>{
@@ -40,9 +43,7 @@ export function Login() {
 			<div className={style.contain}>
 				<Formik
 					initialValues={initialValues}
-					onSubmit={(values) => {
-						loginator(values.email, values.password);
-					}}
+					onSubmit={(values)=>mutation.mutate(values)}
 				>
 					<Form className={style.form_container}>
 						<label className={style.label} htmlFor="email">
