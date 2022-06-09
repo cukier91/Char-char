@@ -17,7 +17,7 @@ export function Landing() {
 
 	async function getData() {
 		/* eslint no-console: ["error", { allow: ["warn", "error", "log"] }] */
-
+		
 		const docRef = query(collection(db, 'book_point'));
 		const queryDoc = await getDocs(docRef);
 		queryDoc.forEach((doc) => {

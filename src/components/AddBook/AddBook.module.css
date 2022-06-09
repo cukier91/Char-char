@@ -85,3 +85,7 @@ input:focus {
     margin-right: 0.3rem;
     width: 4rem;
 }
+
+.disabled{
+    display: none;
+}

@@ -85,22 +85,23 @@ export function AddBook() {
 				status: status,
 				id: uuidv4(),
 			});
+			navigate('/home')
 		} catch (err) {
-			alert(err);
+			alert(err)
 		}
 	};
 
-	const FormInput = (label: string, name: string, type = 'text') => {
-		//to upper case label first
-		return (
-			<>
-				<label className={style.label} htmlFor={label}>
-					{label}:
-				</label>
-				<Field className={style.input} id={label} type={type} name={name} />
-			</>
-		);
-	};
+	// const FormInput = (label: string, name: string, type = 'text') => {
+	// 	//to upper case label first
+	// 	return (
+	// 		<>
+	// 			<label className={style.label} htmlFor={label}>
+	// 				{label}:
+	// 			</label>
+	// 			<Field className={style.input} id={label} type={type} name={name} />
+	// 		</>
+	// 	);
+	// };
 
 	return (
 		<>
@@ -206,12 +207,17 @@ export function AddBook() {
 								name="user"
 							/>
 
-							<button type="submit" className={style.btn_submit}>
+							<button
+								type="submit"
+								className={style.btn_submit}
+							
+							>
 								Submit
 							</button>
 						</div>
 						<button
-							className={style.btn}
+							type="button"
+							className={step===1?style.disabled:style.btn}
 							onClick={() => {
 								step !== 1 ? setStep(step - 1) : setStep(1);
 							}}
@@ -219,7 +225,8 @@ export function AddBook() {
 							{'<'}
 						</button>
 						<button
-							className={style.btn}
+							type="button"
+							className={step===3?style.disabled:style.btn}
 							onClick={() => {
 								step !== 3 ? setStep(step + 1) : setStep(3);
 							}}
