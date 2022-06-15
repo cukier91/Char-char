@@ -85,9 +85,9 @@ export function AddBook() {
 				status: status,
 				id: uuidv4(),
 			});
-			navigate('/home')
+			navigate('/home');
 		} catch (err) {
-			alert(err)
+			alert(err);
 		}
 	};
 
@@ -207,32 +207,28 @@ export function AddBook() {
 								name="user"
 							/>
 
-							<button
-								type="submit"
-								className={style.btn_submit}
-							
-							>
+							<button type="submit" className={style.btn_submit}>
 								Submit
 							</button>
 						</div>
+						{step !== 1 ?
 						<button
 							type="button"
-							className={step===1?style.disabled:style.btn}
-							onClick={() => {
-								step !== 1 ? setStep(step - 1) : setStep(1);
-							}}
+							className={style.btn}
+							onClick={() => setStep(step - 1)}
 						>
 							{'<'}
-						</button>
-						<button
-							type="button"
-							className={step===3?style.disabled:style.btn}
-							onClick={() => {
-								step !== 3 ? setStep(step + 1) : setStep(3);
-							}}
-						>
-							{'>'}
-						</button>
+						</button> : null}
+						{step !== 3 ? (
+							<button
+								type="button"
+								className={style.btn}
+								onClick={() => setStep(step + 1)}
+							>
+								{'>'}
+							</button>
+						) : null}
+
 						<p className={style.label}>tu będzie obsługa walidacji</p>
 					</Form>
 				</FormikProvider>

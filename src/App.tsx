@@ -28,6 +28,7 @@ function App() {
 						<Route path="register" element={<Register />} />
 						<Route path="contact" element={<Contact />} />
 						<Route path="addBook" element={<AddBook />} />
+						<Route path="*" element={<div>404</div>} />
 					</Routes>
 				</Routers>
 			</Suspense>
