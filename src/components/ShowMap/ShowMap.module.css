@@ -1,0 +1,16 @@
+:root {
+	--yellow: #F8C630;
+	--pink: #E54F6D;
+	--darkPurple: #451F55;
+  --deepPurple: #451F55;
+  --royalPurple: #724E91;
+  --honeydew:#EFF8E2;
+}
+
+.container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+

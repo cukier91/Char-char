@@ -3,7 +3,7 @@ import style from './AddBook.module.css';
 import { Logo } from '../Logo/Logo';
 import { db } from '../../firebase-config';
 import { collection, addDoc } from 'firebase/firestore';
-import { FormikProvider, Form, Field,useFormik } from 'formik';
+import { FormikProvider, Form, Field, useFormik } from 'formik';
 import { useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -21,12 +21,13 @@ interface Values {
 }
 
 interface AddBookData extends Values {
-	location:[number,number];
+	location: [number, number];
 }
 
 export function AddBook() {
 	const navigate = useNavigate();
-	const [location, setLocation] = useState<[number,number]>([0,0]);
+	const [location, setLocation] = useState<[number, number]>([0, 0]);
+	const [step, setStep] = useState<number>(1);
 
 	useEffect(() => {
 		navigator.geolocation.getCurrentPosition(function (position) {
@@ -44,20 +45,32 @@ export function AddBook() {
 		bookAuthor: '',
 		bookName: '',
 		contact: '',
-		status: 'available'
+		status: 'available',
 	};
 
-	const formik=useFormik({
+	const formik = useFormik({
 		initialValues: initialValues,
 		//validationSchema: {},
 		onSubmit: (values) => {
-						addBook({...values,location});
-					},
-	})
+			addBook({ ...values, location });
+		},
+	});
 
-	const addBook = async (values:AddBookData) => {
+	const addBook = async (values: AddBookData) => {
 		try {
-			const {city,postCode,street,buildingNo,bookAuthor,bookName,contact,user,types,status,location}=values;
+			const {
+				city,
+				postCode,
+				street,
+				buildingNo,
+				bookAuthor,
+				bookName,
+				contact,
+				user,
+				types,
+				status,
+				location,
+			} = values;
 			await addDoc(collection(db, 'book_point'), {
 				city: city,
 				postCode: postCode,
@@ -72,18 +85,23 @@ export function AddBook() {
 				status: status,
 				id: uuidv4(),
 			});
+			navigate('/home');
 		} catch (err) {
 			alert(err);
 		}
 	};
 
-	const FormInput=(label:string,name:string,type="text")=>{
-		//to upper case label first
-		return <><label className={style.label} htmlFor={label}>
-							{label}: 
-						</label>
-						<Field className={style.input} id={label} type={type} name={name} /></>
-	}
+	// const FormInput = (label: string, name: string, type = 'text') => {
+	// 	//to upper case label first
+	// 	return (
+	// 		<>
+	// 			<label className={style.label} htmlFor={label}>
+	// 				{label}:
+	// 			</label>
+	// 			<Field className={style.input} id={label} type={type} name={name} />
+	// 		</>
+	// 	);
+	// };
 
 	return (
 		<>
@@ -91,91 +109,126 @@ export function AddBook() {
 				<h1>Add Book Form</h1>
 				<FormikProvider value={formik}>
 					<Form className={style.form_container}>
-						<label className={style.label} htmlFor="city">
-							City:
-						</label>
-						<Field className={style.input} id="city" type="text" name="city" />
-						<label className={style.label} htmlFor="postCode">
-							Post code:
-						</label>
-						<Field
-							className={style.input}
-							id="postCode"
-							type="text"
-							name="postCode"
-						/>
-						<label className={style.label} htmlFor="street">
-							Street:
-						</label>
-						<Field
-							className={style.input}
-							id="street"
-							type="text"
-							name="street"
-						/>
-						<label className={style.label} htmlFor="buildingNo">
-							Building no:
-						</label>
-						<Field
-							className={style.input}
-							id="buildingNo"
-							type="text"
-							name="buildingNo"
-						/>
-						<label className={style.label} htmlFor="bookAuthor">
-							Book author:
-						</label>
-						<Field
-							className={style.input}
-							id="bookAuthor"
-							type="text"
-							name="bookAuthor"
-						/>
-						<label className={style.label} htmlFor="bookName">
-							Book name:
-						</label>
-						<Field
-							className={style.input}
-							id="bookName"
-							type="text"
-							name="bookName"
-						/>
-						<label className={style.label} htmlFor="contact">
-							Contact number:
-						</label>
-						<Field
-							className={style.input}
-							id="contact"
-							type="text"
-							name="contact"
-						/>
-						<label className={style.label} htmlFor="user">
-							Your name:
-						</label>
-						<Field className={style.input} id="user" type="text" name="user" />
-
-						<div role="group" aria-labelledby="my-radio-group">
-							<label>
-								<Field type="radio" name="types" value="To rent" />
-								To rent
+						<h2>STEP {step}/3</h2>
+						<div className={step === 1 ? style.form_step : style.form_hide}>
+							<label className={style.label} htmlFor="city">
+								City:
 							</label>
-							<label>
-								<Field type="radio" name="types" value="For free" />
-								For free
+							<Field
+								className={style.input}
+								id="city"
+								type="text"
+								name="city"
+							/>
+							<label className={style.label} htmlFor="postCode">
+								Post code:
 							</label>
-							<label>
-								<Field type="radio" name="types" value="Sale" />
-								For sale
+							<Field
+								className={style.input}
+								id="postCode"
+								type="text"
+								name="postCode"
+							/>
+							<label className={style.label} htmlFor="street">
+								Street:
 							</label>
-							<label>
-								<Field type="radio" name="types" value="Exchange" />
-								Exchange
+							<Field
+								className={style.input}
+								id="street"
+								type="text"
+								name="street"
+							/>
+							<label className={style.label} htmlFor="buildingNo">
+								Building no:
 							</label>
+							<Field
+								className={style.input}
+								id="buildingNo"
+								type="text"
+								name="buildingNo"
+							/>
 						</div>
+						<div className={step === 2 ? style.form_step : style.form_hide}>
+							<label className={style.label} htmlFor="bookAuthor">
+								Book author:
+							</label>
+							<Field
+								className={style.input}
+								id="bookAuthor"
+								type="text"
+								name="bookAuthor"
+							/>
+							<label className={style.label} htmlFor="bookName">
+								Book name:
+							</label>
+							<Field
+								className={style.input}
+								id="bookName"
+								type="text"
+								name="bookName"
+							/>
 
-						<button type="submit" className={style.btn_submit}>
-							Submit
-						</button>
+							<div role="group" aria-labelledby="my-radio-group">
+								<label>
+									<Field type="radio" name="types" value="To rent" />
+									To rent
+								</label>
+								<label>
+									<Field type="radio" name="types" value="For free" />
+									For free
+								</label>
+								<label>
+									<Field type="radio" name="types" value="Sale" />
+									For sale
+								</label>
+								<label>
+									<Field type="radio" name="types" value="Exchange" />
+									Exchange
+								</label>
+							</div>
+						</div>
+						<div className={step === 3 ? style.form_step : style.form_hide}>
+							<label className={style.label} htmlFor="contact">
+								Contact number:
+							</label>
+							<Field
+								className={style.input}
+								id="contact"
+								type="text"
+								name="contact"
+							/>
+							<label className={style.label} htmlFor="user">
+								Your name:
+							</label>
+							<Field
+								className={style.input}
+								id="user"
+								type="text"
+								name="user"
+							/>
+
+							<button type="submit" className={style.btn_submit}>
+								Submit
+							</button>
+						</div>
+						{step !== 1 ?
+						<button
+							type="button"
+							className={style.btn}
+							onClick={() => setStep(step - 1)}
+						>
+							{'<'}
+						</button> : null}
+						{step !== 3 ? (
+							<button
+								type="button"
+								className={style.btn}
+								onClick={() => setStep(step + 1)}
+							>
+								{'>'}
+							</button>
+						) : null}
+
 						<p className={style.label}>tu będzie obsługa walidacji</p>
 					</Form>
 				</FormikProvider>
